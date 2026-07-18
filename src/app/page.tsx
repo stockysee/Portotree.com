@@ -87,7 +87,7 @@ export default function Home() {
                   </span>
                 </h1>
                 <p className="text-xl text-muted-foreground">
-                  Buat portofolio menawan, resume ramah ATS, dan link-in-bio kustom semua dari satu dasbor yang tangguh. Sepenuhnya gratis.
+                  Mulai bangun identitas profesional Anda lewat portofolio yang menarik, resume ramah ATS, dan link-in-bio gratis dalam satu platform.
                 </p>
               </div>
               
@@ -252,7 +252,7 @@ export default function Home() {
           <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">
-                Untuk Siapa Portfolio Ini?
+                Untuk Siapa Portofolio Ini?
               </h2>
               <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
                 Platform ini didesain khusus untuk membantumu tampil lebih profesional dan menonjol di mata perekrut, apapun latar belakang kariermu.
