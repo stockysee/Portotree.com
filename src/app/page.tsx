@@ -43,7 +43,7 @@ export default function Home() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-center lg:text-left z-20 flex flex-col items-center lg:items-start"
+                className="text-left z-20 flex flex-col items-start"
               >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-green-200 text-green-700 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
                   <span className="flex h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse"></span>
@@ -57,7 +57,7 @@ export default function Home() {
                   </span>
                 </h1>
                 
-                <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
+                <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed mb-8 max-w-lg">
                   Mulai bangun identitas profesional Anda lewat portofolio yang menarik, resume ramah ATS, hingga company profile elegan secara gratis dalam satu platform.
                 </p>
 
