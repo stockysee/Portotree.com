@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
-
+@custom-variant data-open (&[data-open], &:is([data-open] *));
+@custom-variant data-closed (&[data-closed], &:is([data-closed] *));
+@custom-variant data-state-open (&[data-state="open"], &:is([data-state="open"] *));
+@custom-variant data-state-closed (&[data-state="closed"], &:is([data-state="closed"] *));
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

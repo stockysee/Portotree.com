@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { DevToast } from "@/components/layout/DevToast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,10 +32,7 @@ export default function RootLayout({
         {children}
         
         {/* Temporary Development Toast */}
-        <div className="fixed top-[calc(50%+30px)] left-1/2 -translate-x-1/2 -translate-y-1/2 md:top-auto md:bottom-6 md:translate-y-0 z-[100] px-4 py-2 rounded-full bg-slate-900/25 md:bg-slate-900/80 backdrop-blur-md text-white text-sm font-medium shadow-2xl border border-white/10 flex items-center gap-2 pointer-events-none animate-in fade-in duration-500 whitespace-nowrap w-max">
-          <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0"></div>
-          Sedang tahap development
-        </div>
+        <DevToast />
       </body>
     </html>
   );

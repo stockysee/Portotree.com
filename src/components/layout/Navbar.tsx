@@ -23,21 +23,36 @@ export function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
-    // Tampilkan tombol FAB setelah 3 detik
-    const fabTimer = setTimeout(() => {
-      setShowFab(true);
-    }, 3000);
+    const handleScroll = () => {
+      if (window.scrollY > 150) {
+        setShowFab(true);
+      } else {
+        setShowFab(false);
+        setShowFabTooltip(false);
+        setIsFabOpen(false);
+      }
+    };
 
-    // Tampilkan tooltip 2 detik setelah FAB muncul (berarti 5 detik dari awal)
-    const tooltipTimer = setTimeout(() => {
-      setShowFabTooltip(true);
-    }, 5000);
+    // Pengecekan pertama kali saat render
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    let tooltipTimer: NodeJS.Timeout;
+    if (showFab) {
+      // Tampilkan tooltip 2 detik setelah FAB muncul (jika belum ditutup manual)
+      tooltipTimer = setTimeout(() => {
+        setShowFabTooltip(true);
+      }, 2000);
+    }
 
     return () => {
-      clearTimeout(fabTimer);
-      clearTimeout(tooltipTimer);
+      if (tooltipTimer) clearTimeout(tooltipTimer);
     };
-  }, []);
+  }, [showFab]);
 
   return (
     <>
@@ -58,42 +73,47 @@ export function Navbar() {
             </div>
 
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 focus:outline-none">
-                  Produk <ChevronDown className="w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-64 mt-4 rounded-xl p-2 shadow-xl border-slate-100">
-                  <DropdownMenuItem className="cursor-pointer gap-4 p-3 rounded-lg hover:bg-slate-50">
-                    <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600">
-                      <Briefcase className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm text-slate-800">Job Feed</div>
-                      <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer gap-4 p-3 rounded-lg hover:bg-slate-50 mt-1">
-                    <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600">
-                      <Layout className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
-                      <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer gap-4 p-3 rounded-lg hover:bg-slate-50 mt-1">
-                    <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600">
-                      <FileText className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm text-slate-800">Buat CV</div>
-                      <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
-                    </div>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60">Blog</Link>
-              <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60">About</Link>
+              <div className="relative group">
+                <button className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 focus:outline-none py-2">
+                  Produk <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-180" />
+                </button>
+                <div className="absolute top-full left-0 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                  <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
+                    <Link href="/job-feed" className="flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors">
+                      <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0">
+                        <Briefcase className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm text-slate-800 flex items-center gap-2">
+                          Job Feed
+                          <span className="text-[9px] font-bold uppercase tracking-widest bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Soon</span>
+                        </div>
+                        <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
+                      </div>
+                    </Link>
+                    <Link href="/portofolio" className="flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
+                      <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0">
+                        <Layout className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
+                        <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
+                      </div>
+                    </Link>
+                    <Link href="/resume" className="flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
+                      <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0">
+                        <FileText className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm text-slate-800">Buat CV</div>
+                        <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Blog</Link>
+              <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">About</Link>
             </nav>
             
             <div className="flex items-center gap-4">
@@ -186,48 +206,77 @@ export function Navbar() {
               )}
             </AnimatePresence>
 
-            <DropdownMenu modal={false} onOpenChange={setIsFabOpen}>
-              <DropdownMenuTrigger className={`rounded-full shadow-lg focus:outline-none active:scale-95 transition-all w-14 h-14 flex items-center justify-center relative z-10 backdrop-blur-md ${
-                isFabOpen 
-                  ? 'bg-white/85 shadow-slate-200/50 hover:bg-slate-50/90 border border-slate-200 text-slate-700' 
-                  : 'bg-green-600/85 hover:bg-green-700/85 shadow-green-600/30'
-              }`}>
+            <div className="relative">
+              <button 
+                onClick={() => setIsFabOpen(!isFabOpen)}
+                className={`rounded-full shadow-lg focus:outline-none active:scale-95 transition-all w-14 h-14 flex items-center justify-center relative z-[210] backdrop-blur-md ${
+                  isFabOpen 
+                    ? 'bg-white/85 shadow-slate-200/50 hover:bg-slate-50/90 border border-slate-200 text-slate-700' 
+                    : 'bg-green-600/85 hover:bg-green-700/85 shadow-green-600/30'
+                }`}
+              >
                 {isFabOpen ? (
                   <X className="w-6 h-6 animate-in zoom-in duration-300" strokeWidth={2.5} />
                 ) : (
                   <Image src="/nav.png" alt="Navigation" width={28} height={28} className="w-7 h-7 object-contain brightness-0 invert opacity-95 animate-in zoom-in duration-300" />
                 )}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" side="top" className="w-64 mb-4 rounded-xl p-2 shadow-xl border-slate-100">
-            <DropdownMenuItem className="cursor-pointer gap-4 p-3 rounded-lg hover:bg-slate-50">
-              <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600">
-                <Briefcase className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="font-bold text-sm text-slate-800">Job Feed</div>
-                <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer gap-4 p-3 rounded-lg hover:bg-slate-50 mt-1">
-              <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600">
-                <Layout className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
-                <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer gap-4 p-3 rounded-lg hover:bg-slate-50 mt-1">
-              <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="font-bold text-sm text-slate-800">Buat CV</div>
-                <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
-              </div>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              </button>
+
+              <AnimatePresence>
+                {isFabOpen && (
+                  <>
+                    {/* Invisible overlay to close when clicking outside */}
+                    <motion.div 
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="fixed inset-0 z-[190]"
+                      onClick={() => setIsFabOpen(false)}
+                    />
+                    
+                    {/* The animated popup menu */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9, y: 15 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 15 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="absolute bottom-[70px] right-0 w-64 rounded-xl p-2 shadow-2xl border border-slate-100 bg-white z-[200]"
+                    >
+                      <button onClick={() => { router.push('/job-feed'); setIsFabOpen(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors">
+                        <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0">
+                          <Briefcase className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            Job Feed
+                            <span className="text-[9px] font-bold uppercase tracking-widest bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Soon</span>
+                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
+                        </div>
+                      </button>
+                      <button onClick={() => { router.push('/portofolio'); setIsFabOpen(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
+                        <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0">
+                          <Layout className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
+                          <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
+                        </div>
+                      </button>
+                      <button onClick={() => { router.push('/resume'); setIsFabOpen(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
+                        <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-sm text-slate-800">Buat CV</div>
+                          <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
+                        </div>
+                      </button>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
