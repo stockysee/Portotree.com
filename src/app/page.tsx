@@ -1,508 +1,329 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, LayoutTemplate, Link as LinkIcon, QrCode, FileText, Globe, Share2, Eye, Briefcase, ChevronLeft, ChevronRight, Rocket, CheckCircle2 } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { 
+  ArrowRight, 
+  Users, 
+  Briefcase, 
+  Building2, 
+  Globe, 
+  ShieldCheck, 
+  Zap, 
+  Layout, 
+  FileText,
+  MapPin,
+  Clock,
+  CheckCircle2,
+  Trophy
+} from "lucide-react";
 
 export default function Home() {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [showWelcome, setShowWelcome] = useState(false);
-  const targetAudienceRef = useRef<HTMLDivElement>(null);
-  const words = ["Identitas", "Perusahaan", "Karier"];
-
-  const scrollTargetAudience = (direction: "left" | "right") => {
-    if (targetAudienceRef.current) {
-      const scrollAmount = direction === "left" ? -window.innerWidth * 0.8 : window.innerWidth * 0.8;
-      targetAudienceRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    // Show welcome popup after 1 second
-    const timer = setTimeout(() => {
-      setShowWelcome(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">
       <Navbar />
-      
-      <main className="flex-1">
-        {/* HERO SECTION */}
-        <section className="relative w-full min-h-[90vh] md:min-h-screen flex flex-col justify-center pt-32 pb-16 lg:pt-40 lg:pb-20 text-left overflow-hidden">
-          <div className="absolute inset-0 magicpattern z-[-1]"></div>
-          
-          <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12"
-            >
-              <div className="space-y-6 max-w-4xl">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background shadow-sm border text-sm font-medium text-green-600 w-fit">
-                  <Globe className="w-4 h-4" />
-                  <span>Website Portofolio Online</span>
+
+      <main className="flex-grow pt-20 md:pt-24">
+        
+        {/* 1. HERO SECTION */}
+        <section className="relative w-full min-h-[100dvh] overflow-hidden bg-slate-50 flex items-center pt-20 pb-20">
+          {/* Decorative Background Elements */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none z-0">
+            <div className="absolute top-1/4 left-0 w-72 h-72 bg-green-400/20 rounded-full blur-3xl -translate-x-1/2"></div>
+            <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl translate-x-1/2"></div>
+          </div>
+
+          <div className="relative px-6 md:px-8 w-full max-w-7xl mx-auto z-10 -mt-12 md:-mt-28">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Left Column: Content */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-left z-20"
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-green-200 text-green-700 text-sm font-semibold mb-6 md:mb-8 shadow-sm">
+                  <span className="flex h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse"></span>
+                  Platform Identitas Digital
                 </div>
-                <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground flex flex-col">
-                  <span>Bangun portofolio menarikmu untuk</span>
-                  <span className="inline-grid mt-2">
-                    <AnimatePresence mode="popLayout">
-                      <motion.span
-                        key={words[wordIndex]}
-                        initial={{ y: 40, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -40, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="col-start-1 row-start-1 text-left text-green-600"
-                      >
-                        {words[wordIndex]}
-                      </motion.span>
-                    </AnimatePresence>
+                
+                <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 leading-[1.1] md:leading-tight">
+                  <span className="lg:whitespace-nowrap">Satu Platform untuk</span> <br className="hidden lg:block" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
+                    Semua Identitas Digital Anda
                   </span>
                 </h1>
-                <p className="text-xl text-muted-foreground">
-                  Mulai bangun identitas profesional Anda lewat portofolio yang menarik, resume ramah ATS, dan link-in-bio gratis dalam satu platform.
+                
+                <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed mb-8 md:mb-10 max-w-xl">
+                  Mulai bangun identitas profesional Anda lewat portofolio yang menarik, resume ramah ATS, hingga company profile elegan secara gratis dalam satu platform.
                 </p>
-              </div>
-              
-              <div className="flex flex-wrap justify-center w-full md:w-auto gap-4 mt-8 md:mt-0 md:-translate-y-6 md:-translate-x-8 lg:-translate-x-16">
-                <style>{`
-                  @keyframes blob-shape {
-                    0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-                    50% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-                    100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-                  }
-                  .animate-blob-shape {
-                    animation: blob-shape 4s infinite ease-in-out alternate;
-                  }
-                `}</style>
-                <Link href="/register" className="relative group flex items-center justify-center">
-                  <div className="absolute inset-0 animate-ping">
-                    <div className="w-full h-full bg-green-500 opacity-75 animate-blob-shape"></div>
-                  </div>
-                  <Button className="relative z-10 w-32 h-32 p-0 text-lg font-bold animate-blob-shape flex flex-col items-center justify-center hover:scale-110 transition-all duration-300 shadow-[0_0_30px_rgba(22,163,74,0.5)] hover:shadow-[0_0_50px_rgba(22,163,74,0.7)] bg-green-600 hover:bg-green-500 text-white border-0">
-                    <span className="leading-tight">Mulai</span>
-                    <span className="leading-tight">Gratis</span>
-                    <ArrowRight className="mt-1 h-6 w-6 group-hover:translate-x-1.5 group-hover:scale-110 transition-all duration-300" />
-                  </Button>
-                </Link>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-24 text-center"
-            >
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-3">
-                  <Globe className="w-8 h-8 text-green-600" />
-                  <p className="text-4xl font-bold text-foreground">1,000+</p>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-start items-start sm:items-center">
+                  <Link href="/register" className="w-full sm:w-auto">
+                    <Button size="lg" className="w-full h-14 px-8 text-base font-bold bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg hover:shadow-green-600/30 transition-all hover:-translate-y-1">
+                      Mulai Sekarang - Gratis
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
+                  <Link href="#choose-journey" className="w-full sm:w-auto">
+                    <Button size="lg" variant="outline" className="w-full h-14 px-8 text-base font-bold rounded-full bg-white hover:bg-slate-50 transition-all border-slate-200 text-slate-700 shadow-sm hover:-translate-y-1">
+                      Lihat Fitur Kami
+                    </Button>
+                  </Link>
                 </div>
-                <p className="text-base text-muted-foreground font-medium mt-1">Portofolio Dibuat</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-3">
-                  <Share2 className="w-8 h-8 text-green-600" />
-                  <p className="text-4xl font-bold text-foreground">88%</p>
-                </div>
-                <p className="text-base text-muted-foreground font-medium mt-1">Rasio Berbagi</p>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Right Column: Image */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative mt-8 lg:mt-0 flex justify-center lg:justify-end z-10"
+              >
+                <img 
+                  src="/hero-img.png" 
+                  alt="PortoTree Dashboard Preview" 
+                  className="w-[120%] sm:w-[110%] max-w-none h-auto object-contain drop-shadow-2xl lg:translate-x-12"
+                  onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop"; }}
+                />
+                
+                {/* Floating decorative elements around image */}
+                <div className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 w-24 h-24 md:w-40 md:h-40 bg-blue-100/50 rounded-full blur-2xl -z-10"></div>
+                <div className="absolute -top-6 -left-6 md:-top-10 md:-left-10 w-24 h-24 md:w-40 md:h-40 bg-green-100/50 rounded-full blur-2xl -z-10"></div>
+              </motion.div>
+            </div>
           </div>
-          
-          {/* MOCKUP PLACEHOLDERS - Moved outside padded container for true full-bleed */}
-          <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-10 pt-10 flex flex-row items-center md:items-end justify-start md:justify-center gap-6 md:gap-8 w-full pb-16 overflow-x-auto snap-x snap-mandatory custom-scrollbar"
-          >
-            {/* Spacer for left alignment */}
-            <div className="w-0 sm:w-2 md:w-[calc((100vw-72rem)/2)] shrink-0 max-w-[max(1.5rem,calc((100vw-80rem)/2))]"></div>
-
-            {/* Mobile Mockup */}
-            <div className="w-[200px] md:w-[260px] shrink-0 rounded-[2rem] md:rounded-[2.5rem] border-[6px] md:border-[8px] border-muted bg-muted/30 shadow-2xl overflow-hidden aspect-[9/19] flex items-center justify-center relative backdrop-blur-sm snap-center ml-6 md:ml-0">
-               {/* Dynamic Island */}
-               <div className="absolute top-0 w-full flex justify-center pt-1.5 md:pt-2 z-10">
-                  <div className="w-16 h-4 md:w-20 md:h-5 bg-muted rounded-full"></div>
-               </div>
-               <p className="text-muted-foreground text-xs md:text-sm font-medium text-center px-4">Pratinjau Mobile</p>
-            </div>
-
-            {/* Desktop Mockup */}
-            <div className="w-[92vw] max-w-[500px] shrink-0 md:w-full md:max-w-3xl rounded-xl border border-muted-foreground/20 bg-muted/30 shadow-2xl overflow-hidden aspect-[16/9] flex items-center justify-center relative backdrop-blur-sm snap-center">
-               <div className="absolute top-0 w-full h-8 md:h-10 border-b border-muted-foreground/10 bg-background/50 flex items-center px-3 md:px-4 space-x-1.5 md:space-x-2">
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-400"></div>
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-amber-400"></div>
-                  <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-400"></div>
-               </div>
-               <p className="text-muted-foreground text-sm md:text-base font-medium mt-8 md:mt-10">Pratinjau Desktop</p>
-            </div>
-
-            {/* Spacer for right padding */}
-            <div className="w-6 md:w-8 shrink-0"></div>
-          </motion.div>
         </section>
 
-        {/* FEATURES SECTION */}
-        <section id="features" className="relative bg-gradient-to-br from-green-500 via-green-700 to-emerald-900 py-24 overflow-hidden">
-          {/* Decorative Background Elements */}
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            {/* Dot Pattern Overlay */}
-            <div 
-              className="absolute inset-0 opacity-30" 
-              style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}
-            ></div>
-            <div className="absolute -top-32 -right-32 w-[30rem] h-[30rem] bg-white opacity-10 rounded-full blur-[100px]"></div>
-            <div className="absolute top-1/2 -left-32 w-[25rem] h-[25rem] bg-green-300 opacity-20 rounded-full blur-[100px]"></div>
-          </div>
 
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Kolom Kiri: Teks */}
-            <div className="max-w-xl">
-              <h2 className="text-3xl font-extrabold tracking-tight sm:text-5xl mb-6 text-white leading-tight">
-                Mengapa Kamu Butuh Portofolio Online?
-              </h2>
-              <p className="text-lg text-green-50/90 leading-relaxed">
-                Meskipun portofolio PDF masih umum digunakan, versi website memiliki keunggulan yang tidak
-                dimiliki dokumen statis, contohnya kamu bisa update informasi di dalamnya secara instan. Portofolio digital berbasis web memberikan kesan bahwa kamu adalah
-                profesional yang update teknologi dan serius dalam membangun 
-                <span className="relative inline-block ml-1">
-                  <span className="relative z-10 text-white font-bold">personal branding</span>
-                  <svg className="absolute -bottom-1 left-0 w-full h-3 text-emerald-300" viewBox="0 0 100 20" preserveAspectRatio="none">
-                    <path d="M2,15 Q50,0 98,15" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                  </svg>
-                </span>.
+        {/* 3. CHOOSE YOUR JOURNEY */}
+        <section id="choose-journey" className="py-16 md:py-24 bg-slate-50 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+          <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-4 md:mb-6 leading-tight">Pilih Perjalanan Anda</h2>
+              <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                PortoTree dirancang fleksibel. Apakah Anda seorang individu yang ingin menonjolkan karya, atau sebuah perusahaan yang ingin tampil kredibel?
               </p>
             </div>
 
-            {/* Kolom Kanan: Kartu Fitur */}
-            <div className="grid gap-6">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+              {/* Journey 1: Individual */}
+              <Link href="/portofolio" className="group block">
+                <div className="h-full bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                  <div className="w-16 h-16 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-8">
+                    <Briefcase className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Untuk Individu & Freelancer</h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed">
+                    Buat portofolio profesional, CV yang ramah ATS, dan halaman profil link-in-bio untuk memamerkan keahlian Anda ke perekrut dan klien.
+                  </p>
+                  <div className="flex items-center text-green-600 font-bold">
+                    Jelajahi Fitur Portofolio <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+
+              {/* Journey 2: Company */}
+              <Link href="/company-preview" className="group block">
+                <div className="h-full bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
+                  <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
+                    <Building2 className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Untuk Bisnis & Perusahaan</h3>
+                  <p className="text-gray-600 mb-8 leading-relaxed">
+                    Bangun company profile elegan yang menampilkan layanan, portofolio proyek perusahaan, dan tim Anda untuk meyakinkan calon investor.
+                  </p>
+                  <div className="flex items-center text-blue-600 font-bold">
+                    Jelajahi Fitur Perusahaan <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. FEATURE SHOWCASE */}
+        <section className="py-16 md:py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-6 md:px-8">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-4 md:mb-6 leading-tight">Fitur Andalan PortoTree</h2>
+              <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Semua yang Anda butuhkan untuk membangun identitas digital profesional ada di sini.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               {[
-                { 
-                  title: "Visual & Interaktif", 
-                  desc: "Recruiter bisa melihat informasi secara menarik dan profesional bukan hanya membaca deskripsi.", 
-                  icon: Eye,
-                  colorClass: "bg-blue-50 text-blue-600"
-                },
-                { 
-                  title: "Akses Kapan Saja", 
-                  desc: "Cukup share satu link, portofolio bisa diakses dari mana saja tanpa download.", 
-                  icon: Globe,
-                  colorClass: "bg-teal-50 text-teal-600"
-                },
-                { 
-                  title: "Kesan Profesional", 
-                  desc: "Menunjukkan bahwa kamu serius dan melek teknologi di mata HRD.", 
-                  icon: Briefcase,
-                  colorClass: "bg-amber-50 text-amber-500"
-                },
+                { icon: <Layout className="w-6 h-6" />, title: "Live Canvas Editor", desc: "Cukup klik komponen di layar untuk langsung mengedit teks, gaya desain, atau menghapus blok yang tidak diperlukan." },
+                { icon: <Globe className="w-6 h-6" />, title: "Link Simple & Profesional", desc: "Dapatkan link cantik yang mudah diingat (contoh: portotree.com/w/nama untuk portofolio pekerja, dan portotree.com/c/nama untuk profil bisnis/perusahaan)." },
+                { icon: <FileText className="w-6 h-6" />, title: "ATS Friendly Resume", desc: "Generator CV yang dioptimalkan untuk lolos seleksi sistem ATS HRD." },
+                { icon: <Zap className="w-6 h-6" />, title: "Super Cepat", desc: "Infrastruktur modern menjamin halaman Anda dimuat dalam hitungan detik." },
+                { icon: <ShieldCheck className="w-6 h-6" />, title: "Aman & Terpercaya", desc: "Data Anda dienkripsi dan kami menyediakan SSL gratis untuk setiap halaman." },
+                { icon: <Users className="w-6 h-6" />, title: "Kolaborasi Tim", desc: "Kelola halaman Company Profile bersama tim secara *real-time*." },
               ].map((feature, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, x: 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
-                  className="group relative bg-background/95 backdrop-blur-sm p-5 sm:p-6 rounded-2xl flex flex-row items-start text-left shadow-lg border border-white/20 hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-x-2 transition-all duration-300 overflow-hidden cursor-default"
-                >
-                  <div className={`shrink-0 h-14 w-14 sm:h-16 sm:w-16 rounded-full flex items-center justify-center mr-4 sm:mr-5 ${feature.colorClass} shadow-inner`}>
-                    <feature.icon className="h-6 w-6 sm:h-7 sm:w-7" />
+                <div key={i} className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-green-200 transition-colors">
+                  <div className="flex items-center gap-4 mb-4 md:block md:mb-0">
+                    <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-green-600 shrink-0 md:mb-6">
+                      {feature.icon}
+                    </div>
+                    <h4 className="text-lg md:text-xl font-bold text-gray-900 md:mb-3 leading-tight">{feature.title}</h4>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-1 text-foreground group-hover:text-green-600 transition-colors">{feature.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{feature.desc}</p>
-                  </div>
-                </motion.div>
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed">{feature.desc}</p>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* TARGET AUDIENCE SECTION */}
-        <section className="pt-24 pb-12 lg:pb-24 bg-[#f2f2f2]">
-          <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">
-                Untuk Siapa Portofolio Ini?
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-                Platform ini didesain khusus untuk membantumu tampil lebih profesional dan menonjol di mata perekrut, apapun latar belakang kariermu.
-              </p>
-            </div>
-          </div>
-            
-          {/* Slider: Full-bleed horizontal scroll on mobile, centered grid on desktop */}
-          <div 
-            ref={targetAudienceRef}
-            className="flex flex-row overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 lg:gap-8 pb-12 pt-6 -mt-6 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] w-full md:max-w-7xl md:mx-auto md:px-8"
-          >
-            {/* Spacer for left alignment on mobile */}
-            <div className="w-2 sm:w-4 shrink-0 md:hidden"></div>
-
-            {[
-              { 
-                id: "fresh-grad",
-                image: "/fresh-graduade.webp", 
-                alt: "Fresh Graduate",
-                title: "Fresh Graduate",
-                subtitle: "Buat kesan pertama profesional untuk menarik perhatian HRD."
-              },
-              { 
-                id: "creative",
-                image: "/Profesional-kreatif.webp", 
-                alt: "Profesional Kreatif",
-                title: "Profesional Kreatif",
-                subtitle: "Tampilkan karyamu dengan presentasi visual yang memukau."
-              },
-              { 
-                id: "freelancer",
-                image: "/freelance.webp", 
-                alt: "Freelance",
-                title: "Freelancer",
-                subtitle: "Bangun kredibilitas untuk mendapatkan lebih banyak klien."
-              },
-              { 
-                id: "career-switcher",
-                image: "/career-switch.webp", 
-                alt: "Career Switch",
-                title: "Career Switcher",
-                subtitle: "Fokus tunjukkan keahlian baru untuk meyakinkan perekrut."
-              }
-            ].map((item, i) => (
-              <Link href={`/untuk-siapa#${item.id}`} key={i} className="relative w-[85vw] shrink-0 snap-center md:flex-1 md:w-auto ml-4 md:ml-0 block group">
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: i * 0.15, duration: 0.6 }}
-                  className="rounded-t-2xl md:rounded-t-[2rem] rounded-b-full overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-3 bg-background flex flex-col border border-border h-full"
-                >
-                  <div className="w-full aspect-square relative">
-                    <img 
-                      src={item.image} 
-                      alt={item.alt} 
-                      className="absolute inset-0 w-full h-full object-cover" 
-                    />
-                  </div>
-                  <div className="px-6 py-6 pb-12 md:pb-16 text-center flex-1 flex flex-col justify-start md:justify-center">
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2 group-hover:text-green-600 transition-colors">{item.title}</h3>
-                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{item.subtitle}</p>
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
-
-            {/* Spacer for right padding on mobile */}
-            <div className="w-4 shrink-0 md:hidden"></div>
-          </div>
-
-          {/* Navigation Arrows for mobile */}
-          <div className="flex justify-center gap-4 -mt-2 md:hidden relative z-10">
-            <Button 
-              variant="outline" 
-              size="icon" 
-              className="rounded-full h-12 w-12 border-2 border-muted hover:border-green-600 hover:text-green-600 hover:bg-green-50 transition-colors shadow-sm" 
-              onClick={() => scrollTargetAudience('left')}
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
-            <Button 
-              variant="outline" 
-              size="icon" 
-              className="rounded-full h-12 w-12 border-2 border-muted hover:border-green-600 hover:text-green-600 hover:bg-green-50 transition-colors shadow-sm" 
-              onClick={() => scrollTargetAudience('right')}
-            >
-              <ChevronRight className="h-6 w-6" />
-            </Button>
-          </div>
-        </section>
-
-        {/* HALFTONE LOGO SECTION */}
-        <section className="w-full max-w-7xl mx-auto px-6 md:px-8 py-12 md:py-[30px] flex justify-center">
-          <img 
-            src="/logo-halftone.jpg" 
-            alt="PortoTree Halftone Logo" 
-            className="w-full h-auto" 
-          />
-        </section>
-
-        {/* BANNER SECTION */}
-        <section className="w-full max-w-7xl mx-auto px-0 md:px-8 flex flex-col items-center">
-          {/* Desktop Banner */}
-          <img 
-            src="/banner-portotree.webp" 
-            alt="PortoTree Banner" 
-            className="hidden md:block w-full h-auto object-cover" 
-          />
-          {/* Mobile Banner */}
-          <img 
-            src="/banner-portotree-mobile.webp" 
-            alt="PortoTree Mobile Banner" 
-            className="block md:hidden w-full h-auto object-cover" 
-          />
-        </section>
-
-        {/* ARTIKEL PENGANTAR SECTION */}
-        <section className="pt-16 md:pt-24 pb-8 md:pb-12 bg-white">
-          <div className="w-full max-w-4xl mx-auto px-6 md:px-8">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-2xl md:text-5xl font-extrabold tracking-tight text-foreground leading-tight">
-                <span className="text-green-600 relative inline-block mb-2 md:mb-3">
-                  Web Portofolio Online
-                  <svg className="absolute w-full h-3 -bottom-1 md:-bottom-2 left-0 text-green-400" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                    <path d="M2 9.5C45.5 3.5 120 -2 198 9.5" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                  </svg>
-                </span>{" "}
-                Profesional <br />
-                Tanpa Coding
-              </h2>
-            </div>
-
-            <div className="bg-card border border-border/60 shadow-sm rounded-3xl p-6 sm:p-8 md:p-12 text-base md:text-lg text-muted-foreground leading-relaxed space-y-6 mb-12">
-              <p>
-                Di tengah persaingan dunia kerja yang semakin ketat, mengandalkan CV saja terkadang tidak cukup. Pernahkah kamu merasa kesulitan menjelaskan hasil kerjamu hanya lewat barisan teks? Inilah alasan mengapa kamu butuh <span className="text-green-600 font-medium">web portofolio online</span>. Bayangkan memiliki sebuah "rumah digital" yang bisa memamerkan semua hasil karyamu secara visual, interaktif, dan bisa diakses oleh siapa saja hanya dengan satu klik link.
-              </p>
-            </div>
-
-            {/* FEATURE BOX: PORTOTREE */}
-            <div className="bg-green-600 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
-              {/* Subtle background decoration */}
-              <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-green-500/30 blur-3xl"></div>
-              
-              <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 text-white text-sm font-medium mb-6">
-                  <Rocket className="w-4 h-4" />
-                  <span>Tanpa Coding</span>
+        {/* 5. PORTFOLIO PREVIEW */}
+        <section className="py-16 md:py-24 bg-slate-900 text-white overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-8">
+            <div className="flex flex-col md:flex-row items-center gap-16">
+              <div className="w-full md:w-1/2 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 text-green-400 text-sm font-semibold">
+                  Untuk Individu
                 </div>
-                
-                <h3 className="text-2xl md:text-4xl font-bold mb-4 leading-snug">
-                  Cara Membuat Website Portofolio Tanpa Coding dengan{" "}
-                  <span className="relative inline-block whitespace-nowrap">
-                    PortoTree
-                    <svg className="absolute w-full h-3 -bottom-1 md:-bottom-2 left-0 text-yellow-400" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                      <path d="M2 9.5C45.5 3.5 120 -2 198 9.5" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
-                    </svg>
-                  </span>
-                </h3>
-                
-                <p className="text-green-50 text-lg mb-8">
-                  PortoTree hadir sebagai platform yang memudahkan kamu memiliki personal brand website hanya dalam waktu kurang dari 5 menit!
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+                  Pamerkan Karya Anda dengan Elegan
+                </h2>
+                <p className="text-base md:text-lg text-slate-400 leading-relaxed">
+                  Tidak perlu pusing memikirkan desain. Pilih dari puluhan template profesional yang sudah kami optimasi untuk menonjolkan estetika karya Anda. Cocok untuk desainer, programmer, penulis, dan fotografer.
                 </p>
-                
-                <div className="space-y-6 text-left">
-                  <div className="flex gap-4">
-                    <CheckCircle2 className="w-6 h-6 text-green-300 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-white">Tanpa Ribet</span> — <span className="text-green-50">Tidak perlu membeli hosting atau mengatur server. Cukup isi informasi detail kamu, link web portofolio siap di share.</span>
-                    </div>
+                <ul className="space-y-4 pt-4">
+                  <li className="flex items-center gap-3"><CheckCircle2 className="text-green-400 w-6 h-6" /> Galeri Proyek Interaktif</li>
+                  <li className="flex items-center gap-3"><CheckCircle2 className="text-green-400 w-6 h-6" /> Integrasi Link Sosial Media</li>
+                  <li className="flex items-center gap-3"><CheckCircle2 className="text-green-400 w-6 h-6" /> SEO Friendly</li>
+                </ul>
+                <div className="pt-6">
+                  <Link href="/portofolio">
+                    <Button className="bg-green-500 hover:bg-green-600 text-white rounded-full px-8 h-12 font-bold">
+                      Lihat Demo Portofolio
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 relative">
+                {/* Mockup Frame */}
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-800 p-2">
+                  <div className="flex gap-1.5 px-2 pb-2 pt-1 border-b border-slate-700 mb-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
-                  <div className="flex gap-4">
-                    <CheckCircle2 className="w-6 h-6 text-green-300 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-white">Tampilan Profesional</span> — <span className="text-green-50">Desain yang ditawarkan sudah dioptimasi agar terlihat elegan di mata recruiter dan HRD.</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <CheckCircle2 className="w-6 h-6 text-green-300 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-white">Link Bio Terintegrasi</span> — <span className="text-green-50">Gunakan URL portofolio di bio media sosial atau cantumkan di CV kreatif milikmu.</span>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <CheckCircle2 className="w-6 h-6 text-green-300 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-white">Mudah Update</span> — <span className="text-green-50">Setiap kali ada proyek baru, tambahkan dengan cepat tanpa membongkar struktur website.</span>
-                    </div>
-                  </div>
+                  <img src="/mockup1.webp" alt="Portfolio Preview" className="w-full h-auto rounded-lg object-cover" onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1507238692062-710e5d12228e?q=80&w=800&auto=format&fit=crop"; }} />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* FAQ SECTION */}
-        <section className="pt-8 md:pt-12 pb-16 md:pb-20">
-          <div className="w-full max-w-3xl mx-auto px-6 md:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tight mb-4">Pertanyaan yang Sering Diajukan</h2>
-              <p className="text-lg text-muted-foreground">
-                Masih penasaran atau punya keraguan? Berikut adalah jawaban dari beberapa pertanyaan yang paling sering ditanyakan kepada kami.
-              </p>
+        {/* 6. COMPANY PREVIEW */}
+        <section className="py-16 md:py-24 bg-white overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-8">
+            <div className="flex flex-col md:flex-row-reverse items-center gap-16">
+              <div className="w-full md:w-1/2 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold">
+                  Untuk Perusahaan
+                </div>
+                <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-gray-900">
+                  Bangun Kepercayaan Klien B2B Anda
+                </h2>
+                <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+                  Buat halaman profil perusahaan (Company Profile) yang menawan. Konsepnya semudah membuat portofolio individu, namun dilengkapi dengan blok konten khusus untuk layanan, klien, struktur organisasi, dan testimoni B2B.
+                </p>
+                <ul className="space-y-4 pt-4 text-gray-700">
+                  <li className="flex items-center gap-3"><Trophy className="text-blue-600 w-6 h-6" /> Showcase Produk & Layanan</li>
+                  <li className="flex items-center gap-3"><Building2 className="text-blue-600 w-6 h-6" /> Struktur Tim & About Us</li>
+                  <li className="flex items-center gap-3"><MapPin className="text-blue-600 w-6 h-6" /> Integrasi Maps & Kontak Bisnis</li>
+                </ul>
+              </div>
+              <div className="w-full md:w-1/2 relative">
+                {/* Mockup Frame */}
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-white p-2">
+                  <div className="flex gap-1.5 px-2 pb-2 pt-1 border-b border-gray-100 mb-2">
+                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                  </div>
+                  <img src="/mockup2.webp" alt="Company Preview" className="w-full h-auto rounded-lg object-cover" onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=800&auto=format&fit=crop"; }} />
+                </div>
+              </div>
             </div>
-            <Accordion className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="text-left">Apakah PortoTree sepenuhnya gratis?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Ya, fitur utama kami termasuk pembuatan resume, portofolio dasar, dan link-in-bio sepenuhnya gratis. Kami akan memperkenalkan tema premium nanti.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="text-left">Bisakah saya mengekspor resume ke PDF?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Tentu saja! Semua resume yang dihasilkan sangat dioptimalkan untuk Sistem Pelacakan Pelamar (ATS) dan dapat diunduh sebagai PDF.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger className="text-left">Bisakah saya menghubungkan domain kustom?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Domain kustom akan tersedia sebagai bagian dari paket premium kami mendatang.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-4">
-                <AccordionTrigger className="text-left">Bisa tambah video di portfolio online PortoTree?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Bisa, kamu bisa embed link video (YouTube, Vimeo, atau Google Drive). File video mentah tidak bisa upload langsung — hanya bisa embed via link.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-5">
-                <AccordionTrigger className="text-left">Apakah portfolio online dioptimalkan untuk mobile?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Ya, semua portfolio responsive untuk smartphone, tablet, dan desktop. Portfolio kamu akan kelihatan keren di device apa pun.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-6">
-                <AccordionTrigger className="text-left">Berapa lama bikin portfolio?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Kamu bisa bikin portfolio dasar dalam 5–10 menit pakai template dan drag-and-drop editor. Portfolio yang lebih detail biasanya 30–60 menit.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
           </div>
         </section>
 
-        {/* CTA SECTION */}
-        <section className="pt-16 pb-24 md:pt-20 bg-white border-t border-border/40">
+        {/* 7. HOW IT WORKS */}
+        <section className="py-16 md:py-24 bg-slate-50 border-t border-gray-200">
+          <div className="max-w-7xl mx-auto px-6 md:px-8 text-center">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-10 md:mb-16 leading-tight">Tampil Online dalam 3 Langkah</h2>
+            
+            <div className="grid md:grid-cols-3 gap-10 md:gap-12 relative">
+              {/* Connector line for desktop */}
+              <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-green-200 -z-10"></div>
+              
+              {[
+                { step: "1", title: "Daftar & Pilih Jalur", desc: "Buat akun gratis dan pilih apakah Anda ingin membuat Profil Individu atau Profil Perusahaan." },
+                { step: "2", title: "Sesuaikan Desain", desc: "Pilih template dasar lalu klik langsung di layar (live edit) untuk mengubah isi konten, warna, dan desain sesuka Anda." },
+                { step: "3", title: "Publikasi ke Dunia", desc: "Copy link yang tersedia atau custom domain anda, lalu bagikan link ke semua orang!" },
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div className="w-24 h-24 rounded-full bg-green-600 text-white flex items-center justify-center text-3xl font-black mb-8 shadow-xl shadow-green-600/20 ring-8 ring-green-50">
+                    {item.step}
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
+                  <p className="text-gray-600 leading-relaxed max-w-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 8. ROADMAP */}
+        <section className="py-16 md:py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-6 md:px-8">
+            <div className="text-center mb-10 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Roadmap Kami</h2>
+              <p className="text-lg text-gray-600">
+                Kami terus berkembang. Berikut adalah rencana pembaruan fitur PortoTree di masa mendatang.
+              </p>
+            </div>
+            
+            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
+              {[
+                { icon: "🌱", title: "Portfolio Builder", status: "LIVE", active: true },
+                { icon: "🌿", title: "Company Profile", status: "LIVE", active: true },
+                { icon: "🌳", title: "Advanced Analytics", status: "Coming Soon", active: false },
+                { icon: "🌲", title: "Premium Templates", status: "Coming Soon", active: false },
+                { icon: "🌲", title: "Custom Integrations", status: "Coming Soon", active: false },
+              ].map((item, i) => (
+                <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shadow shrink-0 z-10 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 ${item.active ? 'bg-green-100' : 'bg-slate-100'}`}>
+                    <span className="text-lg">{item.icon}</span>
+                  </div>
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-xl font-bold text-gray-900">{item.title}</h4>
+                      <span className={`text-xs font-bold px-3 py-1 rounded-full ${item.active ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-600'}`}>
+                        {item.status}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 9. CTA */}
+        <section className="pt-16 pb-24 md:pt-20 bg-slate-50 border-t border-border/40">
           <div className="w-full max-w-4xl mx-auto px-6 md:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8 md:mb-12">
               <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
                 Apa yang Anda butuhkan saat ini?
               </h2>
@@ -538,49 +359,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-        {/* FOOTER */}
-        <Footer />
+
       </main>
 
-      <Dialog open={showWelcome} onOpenChange={setShowWelcome}>
-        <DialogContent className="sm:max-w-xl w-[95vw] p-0 overflow-hidden bg-background max-h-[90vh] overflow-y-auto rounded-2xl">
-          <div className="bg-muted/30 px-4 py-6 sm:px-6 sm:py-8 text-center border-b">
-            <DialogTitle className="text-xl sm:text-3xl font-bold text-foreground">
-              Apa yang Anda butuhkan saat ini?
-            </DialogTitle>
-            <p className="text-sm sm:text-base text-muted-foreground mt-2">
-              Pilih jalur di bawah untuk mulai membangun identitas profesional Anda.
-            </p>
-          </div>
-          <div className="p-4 sm:p-6 grid sm:grid-cols-2 gap-3 sm:gap-4">
-            <Link 
-              href="/register" 
-              onClick={() => setShowWelcome(false)}
-              className="group flex flex-row sm:flex-col items-center justify-start sm:justify-center p-4 sm:p-6 rounded-xl border-2 border-green-600 bg-background text-green-600 hover:bg-green-600 hover:text-white transition-all duration-200 overflow-hidden"
-            >
-              <div className="shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-green-100 group-hover:bg-white/20 text-green-600 group-hover:text-white rounded-full flex items-center justify-center mr-4 sm:mr-0 mb-0 sm:mb-4 group-hover:scale-110 transition-all duration-200">
-                <Globe className="w-6 h-6 sm:w-8 sm:h-8" />
-              </div>
-              <span className="font-semibold text-base sm:text-lg text-left sm:text-center">
-                Buat Portofolio
-              </span>
-            </Link>
-            
-            <Link 
-              href="/register?type=cv" 
-              onClick={() => setShowWelcome(false)}
-              className="group flex flex-row sm:flex-col items-center justify-start sm:justify-center p-4 sm:p-6 rounded-xl border-2 border-blue-600 bg-background text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-200 overflow-hidden"
-            >
-              <div className="shrink-0 w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 group-hover:bg-white/20 text-blue-600 group-hover:text-white rounded-full flex items-center justify-center mr-4 sm:mr-0 mb-0 sm:mb-4 group-hover:scale-110 transition-all duration-200">
-                <FileText className="w-6 h-6 sm:w-8 sm:h-8" />
-              </div>
-              <span className="font-semibold text-base sm:text-lg text-left sm:text-center">
-                Buat CV
-              </span>
-            </Link>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <Footer />
     </div>
   );
 }
