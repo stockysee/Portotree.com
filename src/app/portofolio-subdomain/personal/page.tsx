@@ -58,7 +58,7 @@ export default function Home() {
               <div className="space-y-6 max-w-4xl">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background shadow-sm border text-sm font-medium text-green-600 w-fit">
                   <Globe className="w-4 h-4" />
-                  <span>Website Portofolio Online</span>
+                  <span>Personal Portofolio Online</span>
                 </div>
                 <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground flex flex-col">
                   <span>Bangun portofolio menarikmu untuk</span>

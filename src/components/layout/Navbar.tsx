@@ -152,7 +152,7 @@ export function Navbar() {
                 </div>
               </div>
               <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Blog</Link>
-              <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">About</Link>
+              <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Tentang kami</Link>
             </nav>
             
             <div className="flex items-center gap-4">

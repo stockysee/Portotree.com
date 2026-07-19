@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getSubdomainUrl } from '@/lib/url';
 
 export function Footer() {
   return (
@@ -9,7 +10,7 @@ export function Footer() {
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green-900/60 rounded-full blur-[70px] translate-y-1/3 -translate-x-1/3 pointer-events-none"></div>
       
       <div className="relative w-full max-w-7xl mx-auto px-6 md:px-8 z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2">
             <Link href="/" className="inline-flex items-center gap-3 mb-4 hover:opacity-90 transition-opacity">
               <img src="/logo-portotree-2.png" alt="PortoTree Logo" className="h-8 w-auto object-contain" />
@@ -22,9 +23,16 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-white mb-4">Produk</h4>
             <ul className="space-y-2 text-sm text-green-100">
-              <li><Link href="#features" className="hover:text-white transition-colors">Fitur</Link></li>
-              <li><Link href="#templates" className="hover:text-white transition-colors">Template</Link></li>
-              <li><Link href="#pricing" className="hover:text-white transition-colors">Harga</Link></li>
+              <li><a href={getSubdomainUrl('portofolio')} className="hover:text-white transition-colors">Buat Portofolio</a></li>
+              <li><a href={getSubdomainUrl('resume')} className="hover:text-white transition-colors">Buat CV</a></li>
+              <li><Link href="/job-feed" className="hover:text-white transition-colors flex items-center gap-2">Job Feed <span className="text-[9px] font-bold uppercase tracking-widest bg-white/20 text-white px-1.5 py-0.5 rounded-full">Soon</span></Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-white mb-4">Perusahaan</h4>
+            <ul className="space-y-2 text-sm text-green-100">
+              <li><Link href="https://www.portotree.com/about" target="_blank" className="hover:text-white transition-colors">Tentang kami</Link></li>
+              <li><Link href="https://www.portotree.com/blog" target="_blank" className="hover:text-white transition-colors">Blog</Link></li>
             </ul>
           </div>
           <div>

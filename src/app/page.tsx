@@ -197,7 +197,7 @@ export default function Home() {
                   Pamerkan Karya Anda dengan Elegan
                 </h2>
                 <p className="text-base md:text-lg text-slate-400 leading-relaxed">
-                  Tidak perlu pusing memikirkan desain. Pilih dari puluhan template profesional yang sudah kami optimasi untuk menonjolkan estetika karya Anda. Cocok untuk desainer, programmer, penulis, dan fotografer.
+                  Tidak perlu pusing memikirkan desain. Pilih template profesional yang sudah kami optimasi untuk menonjolkan estetika karya Anda. Cocok untuk desainer, programmer, penulis, dan fotografer.
                 </p>
                 <ul className="space-y-4 pt-4">
                   <li className="flex items-center gap-3"><CheckCircle2 className="text-green-400 w-6 h-6" /> Galeri Proyek Interaktif</li>
