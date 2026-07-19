@@ -43,25 +43,25 @@ export default function Home() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="text-left z-20"
+                className="text-center lg:text-left z-20 flex flex-col items-center lg:items-start"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-green-200 text-green-700 text-sm font-semibold mb-6 md:mb-8 shadow-sm">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-green-200 text-green-700 text-xs sm:text-sm font-semibold mb-6 shadow-sm">
                   <span className="flex h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse"></span>
                   Platform Identitas Digital
                 </div>
                 
-                <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] xl:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 leading-[1.1] md:leading-tight">
+                <h1 className="text-[2.5rem] leading-[1.15] sm:text-5xl lg:text-[3.25rem] xl:text-6xl font-extrabold tracking-tight text-gray-900 mb-5 lg:mb-6 lg:leading-[1.1]">
                   <span className="lg:whitespace-nowrap">Satu Platform untuk</span> <br className="hidden lg:block" />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
                     Semua Identitas Digital Anda
                   </span>
                 </h1>
                 
-                <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed mb-8 md:mb-10 max-w-xl">
+                <p className="text-base sm:text-lg text-gray-600 font-medium leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
                   Mulai bangun identitas profesional Anda lewat portofolio yang menarik, resume ramah ATS, hingga company profile elegan secara gratis dalam satu platform.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-start items-start sm:items-center">
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto justify-center lg:justify-start items-center">
                   <Link href="/register" className="w-full sm:w-auto">
                     <Button size="lg" className="w-full h-14 px-8 text-base font-bold bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg hover:shadow-green-600/30 transition-all hover:-translate-y-1">
                       Mulai Sekarang - Gratis
