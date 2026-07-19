@@ -3,24 +3,28 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Briefcase, Layout, FileText, X } from 'lucide-react';
+import { ChevronDown, Briefcase, Layout, FileText, X, Users, Building2, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getSubdomainUrl } from '@/lib/url';
 
 export function Navbar() {
   // Mock status login untuk simulasi UI
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showFabTooltip, setShowFabTooltip] = useState(false);
+  const [hasDismissedTooltip, setHasDismissedTooltip] = useState(false);
   const [isFabOpen, setIsFabOpen] = useState(false);
   const [showFab, setShowFab] = useState(false);
+  const [showMobilePortoSub, setShowMobilePortoSub] = useState(false);
   const router = useRouter();
+  const pathname = usePathname() || '';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,24 +46,24 @@ export function Navbar() {
 
   useEffect(() => {
     let tooltipTimer: NodeJS.Timeout;
-    if (showFab) {
-      // Tampilkan tooltip 2 detik setelah FAB muncul (jika belum ditutup manual)
+    if (showFab && !hasDismissedTooltip) {
+      // Tampilkan tooltip 1 detik setelah FAB muncul (jika belum pernah ditutup manual)
       tooltipTimer = setTimeout(() => {
         setShowFabTooltip(true);
-      }, 2000);
+      }, 1000);
     }
 
     return () => {
       if (tooltipTimer) clearTimeout(tooltipTimer);
     };
-  }, [showFab]);
+  }, [showFab, hasDismissedTooltip]);
 
   return (
     <>
       <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
         <header className="w-full max-w-7xl rounded-full border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-md">
           <div className="flex h-14 items-center justify-between px-6 md:px-8">
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               <Link href="/" className="flex items-center">
                 <Image 
                   src="/logo-landscape.png" 
@@ -70,6 +74,12 @@ export function Navbar() {
                   priority 
                 />
               </Link>
+              {pathname.includes('/personal') && (
+                <span className="text-lg font-bold bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent -ml-1">Personal</span>
+              )}
+              {pathname.includes('/company') && (
+                <span className="text-lg font-bold bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent -ml-1">Company</span>
+              )}
             </div>
 
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -77,10 +87,10 @@ export function Navbar() {
                 <button className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 focus:outline-none py-2">
                   Produk <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-180" />
                 </button>
-                <div className="absolute top-full left-0 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
                   <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
-                    <Link href="/job-feed" className="flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors">
-                      <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0">
+                    <Link href="/job-feed" className="flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
+                      <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0 transition-transform group-hover/item:scale-110">
                         <Briefcase className="w-5 h-5" />
                       </div>
                       <div>
@@ -91,24 +101,53 @@ export function Navbar() {
                         <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
                       </div>
                     </Link>
-                    <Link href="/portofolio" className="flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
-                      <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0">
-                        <Layout className="w-5 h-5" />
+                    <div className="relative group/sub">
+                      <a href={getSubdomainUrl('portofolio')} className="flex items-center justify-between p-3 rounded-lg hover:bg-emerald-50 transition-colors mt-1 cursor-pointer group/item">
+                        <div className="flex items-start gap-4">
+                          <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0 transition-transform group-hover/item:scale-110">
+                            <Layout className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
+                            <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
+                          </div>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 group-hover/item:translate-x-1 transition-transform" />
+                      </a>
+                      
+                      {/* Sub-menu on Hover */}
+                      <div className="absolute top-0 left-full ml-1 w-64 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 -translate-x-2 group-hover/sub:translate-x-0 z-50">
+                        <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
+                          <a href={getSubdomainUrl('portofolio', '/personal')} className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors group/item">
+                            <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <Users className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-slate-800">Untuk Personal</div>
+                              <div className="text-xs text-slate-500 mt-0.5">Portofolio personal</div>
+                            </div>
+                          </a>
+                          <a href={getSubdomainUrl('portofolio', '/company')} className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors mt-1 group/item">
+                            <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <Building2 className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-slate-800">Untuk Perusahaan</div>
+                              <div className="text-xs text-slate-500 mt-0.5">Company profile B2B</div>
+                            </div>
+                          </a>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
-                        <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
-                      </div>
-                    </Link>
-                    <Link href="/resume" className="flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
-                      <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0">
+                    </div>
+                    <a href={getSubdomainUrl('resume')} className="flex items-start gap-4 p-3 rounded-lg hover:bg-amber-50 transition-colors mt-1 group/item">
+                      <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0 transition-transform group-hover/item:scale-110">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="font-bold text-sm text-slate-800">Buat CV</div>
                         <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
                       </div>
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -196,7 +235,10 @@ export function Navbar() {
                 >
                   <div className="flex items-center gap-3 justify-between">
                     <span className="font-semibold text-sm leading-none drop-shadow-sm whitespace-nowrap">Kebutuhan anda disini</span>
-                    <button onClick={() => setShowFabTooltip(false)} className="text-white/80 hover:text-white shrink-0">
+                    <button onClick={() => {
+                      setShowFabTooltip(false);
+                      setHasDismissedTooltip(true);
+                    }} className="text-white/80 hover:text-white shrink-0">
                       <X className="w-4 h-4" />
                     </button>
                   </div>
@@ -208,7 +250,7 @@ export function Navbar() {
 
             <div className="relative">
               <button 
-                onClick={() => setIsFabOpen(!isFabOpen)}
+                onClick={() => { setIsFabOpen(!isFabOpen); if (isFabOpen) setShowMobilePortoSub(false); }}
                 className={`rounded-full shadow-lg focus:outline-none active:scale-95 transition-all w-14 h-14 flex items-center justify-center relative z-[210] backdrop-blur-md ${
                   isFabOpen 
                     ? 'bg-white/85 shadow-slate-200/50 hover:bg-slate-50/90 border border-slate-200 text-slate-700' 
@@ -242,36 +284,73 @@ export function Navbar() {
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="absolute bottom-[70px] right-0 w-64 rounded-xl p-2 shadow-2xl border border-slate-100 bg-white z-[200]"
                     >
-                      <button onClick={() => { router.push('/job-feed'); setIsFabOpen(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors">
-                        <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0">
-                          <Briefcase className="w-5 h-5" />
+                      <div className="relative grid">
+                        <div className={`col-start-1 row-start-1 flex flex-col transition-opacity duration-300 ${showMobilePortoSub ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                          <button onClick={() => { router.push('/job-feed'); setIsFabOpen(false); setShowMobilePortoSub(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
+                            <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <Briefcase className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                Job Feed
+                                <span className="text-[9px] font-bold uppercase tracking-widest bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Soon</span>
+                              </div>
+                              <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
+                            </div>
+                          </button>
+                          
+                          <button onClick={() => setShowMobilePortoSub(true)} className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-emerald-50 transition-colors mt-1 group/item">
+                            <div className="flex items-start gap-4 text-left">
+                              <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0 transition-transform group-hover/item:scale-110">
+                                <Layout className="w-5 h-5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
+                                <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 group-hover/item:translate-x-1 transition-transform" />
+                          </button>
+                          
+                          <button onClick={() => { router.push('/resume'); setIsFabOpen(false); setShowMobilePortoSub(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-amber-50 transition-colors mt-1 group/item">
+                            <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <FileText className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-slate-800">Buat CV</div>
+                              <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
+                            </div>
+                          </button>
                         </div>
-                        <div>
-                          <div className="font-bold text-sm text-slate-800 flex items-center gap-2">
-                            Job Feed
-                            <span className="text-[9px] font-bold uppercase tracking-widest bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Soon</span>
-                          </div>
-                          <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
+                        
+                        {/* Sub Menu */}
+                        <div className={`col-start-1 row-start-1 flex flex-col transition-opacity duration-300 ${showMobilePortoSub ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                          <button onClick={() => setShowMobilePortoSub(false)} className="w-full text-left flex items-center gap-2 p-3 text-slate-500 hover:text-slate-800 transition-colors border-b border-slate-100 mb-2">
+                            <ChevronLeft className="w-4 h-4" />
+                            <span className="text-sm font-bold">Kembali</span>
+                          </button>
+                          
+                          <a href={getSubdomainUrl('portofolio', '/personal')} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-green-50 transition-colors group/item">
+                            <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <Users className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-slate-800">Untuk Personal</div>
+                              <div className="text-xs text-slate-500 mt-0.5">Portofolio personal</div>
+                            </div>
+                          </a>
+                          
+                          <a href={getSubdomainUrl('portofolio', '/company')} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-green-50 transition-colors mt-1 group/item">
+                            <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <Building2 className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <div className="font-bold text-sm text-slate-800">Untuk Perusahaan</div>
+                              <div className="text-xs text-slate-500 mt-0.5">Company profile B2B</div>
+                            </div>
+                          </a>
                         </div>
-                      </button>
-                      <button onClick={() => { router.push('/portofolio'); setIsFabOpen(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
-                        <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0">
-                          <Layout className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
-                          <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
-                        </div>
-                      </button>
-                      <button onClick={() => { router.push('/resume'); setIsFabOpen(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-slate-50 transition-colors mt-1">
-                        <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0">
-                          <FileText className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <div className="font-bold text-sm text-slate-800">Buat CV</div>
-                          <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
-                        </div>
-                      </button>
+                      </div>
                     </motion.div>
                   </>
                 )}

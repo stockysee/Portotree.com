@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { getSubdomainUrl } from "@/lib/url";
 import { Button } from "@/components/ui/button";
 import { 
   ArrowRight, 
@@ -22,6 +24,8 @@ import {
 } from "lucide-react";
 
 export default function Home() {
+  const [showPortoOptions, setShowPortoOptions] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 overflow-x-hidden">
       <Navbar />
@@ -106,19 +110,19 @@ export default function Home() {
             <div className="text-center mb-10 md:mb-16">
               <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-4 md:mb-6 leading-tight">Pilih Perjalanan Anda</h2>
               <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                PortoTree dirancang fleksibel. Apakah Anda seorang individu yang ingin menonjolkan karya, atau sebuah perusahaan yang ingin tampil kredibel?
+                PortoTree dirancang fleksibel. Apakah Anda seorang personal yang ingin menonjolkan karya, atau sebuah perusahaan yang ingin tampil kredibel?
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-              {/* Journey 1: Individual */}
-              <Link href="/portofolio" className="group block">
+              {/* Journey 1: Personal */}
+              <a href={getSubdomainUrl('portofolio', '/personal')} className="group block">
                 <div className="h-full bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
                   <div className="w-16 h-16 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center mb-8">
                     <Briefcase className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Untuk Individu & Freelancer</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">Untuk Personal & Freelancer</h3>
                   <p className="text-gray-600 mb-8 leading-relaxed">
                     Buat portofolio profesional, CV yang ramah ATS, dan halaman profil link-in-bio untuk memamerkan keahlian Anda ke perekrut dan klien.
                   </p>
@@ -126,10 +130,10 @@ export default function Home() {
                     Jelajahi Fitur Portofolio <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </a>
 
               {/* Journey 2: Company */}
-              <Link href="/company-preview" className="group block">
+              <a href={getSubdomainUrl('portofolio', '/company')} className="group block">
                 <div className="h-full bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
                   <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
@@ -143,7 +147,7 @@ export default function Home() {
                     Jelajahi Fitur Perusahaan <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
@@ -167,14 +171,14 @@ export default function Home() {
                 { icon: <ShieldCheck className="w-6 h-6" />, title: "Aman & Terpercaya", desc: "Data Anda dienkripsi dan kami menyediakan SSL gratis untuk setiap halaman." },
                 { icon: <Users className="w-6 h-6" />, title: "Kolaborasi Tim", desc: "Kelola halaman Company Profile bersama tim secara *real-time*." },
               ].map((feature, i) => (
-                <div key={i} className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-green-200 transition-colors">
-                  <div className="flex items-center gap-4 mb-4 md:block md:mb-0">
-                    <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-green-600 shrink-0 md:mb-6">
+                <div key={i} className="md:p-8 md:rounded-3xl md:bg-slate-50 md:border md:border-slate-100 md:hover:border-green-200 transition-colors">
+                  <div className="flex items-center gap-4 mb-2 md:block md:mb-0">
+                    <div className="w-12 h-12 bg-slate-50 md:bg-white rounded-xl shadow-sm flex items-center justify-center text-green-600 shrink-0 md:mb-6">
                       {feature.icon}
                     </div>
                     <h4 className="text-lg md:text-xl font-bold text-gray-900 md:mb-3 leading-tight">{feature.title}</h4>
                   </div>
-                  <p className="text-sm md:text-base text-gray-600 leading-relaxed">{feature.desc}</p>
+                  <p className="text-sm md:text-base text-gray-600 leading-relaxed ml-16 md:ml-0">{feature.desc}</p>
                 </div>
               ))}
             </div>
@@ -187,7 +191,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center gap-16">
               <div className="w-full md:w-1/2 space-y-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/20 text-green-400 text-sm font-semibold">
-                  Untuk Individu
+                  Untuk Personal
                 </div>
                 <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
                   Pamerkan Karya Anda dengan Elegan
@@ -235,7 +239,7 @@ export default function Home() {
                   Bangun Kepercayaan Klien B2B Anda
                 </h2>
                 <p className="text-base md:text-lg text-gray-600 leading-relaxed">
-                  Buat halaman profil perusahaan (Company Profile) yang menawan. Konsepnya semudah membuat portofolio individu, namun dilengkapi dengan blok konten khusus untuk layanan, klien, struktur organisasi, dan testimoni B2B.
+                  Buat halaman profil perusahaan (Company Profile) yang menawan. Konsepnya semudah membuat portofolio personal, namun dilengkapi dengan blok konten khusus untuk layanan, klien, struktur organisasi, dan testimoni B2B.
                 </p>
                 <ul className="space-y-4 pt-4 text-gray-700">
                   <li className="flex items-center gap-3"><Trophy className="text-blue-600 w-6 h-6" /> Showcase Produk & Layanan</li>
@@ -268,7 +272,7 @@ export default function Home() {
               <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-green-200 -z-10"></div>
               
               {[
-                { step: "1", title: "Daftar & Pilih Jalur", desc: "Buat akun gratis dan pilih apakah Anda ingin membuat Profil Individu atau Profil Perusahaan." },
+                { step: "1", title: "Daftar & Pilih Jalur", desc: "Buat akun gratis dan pilih apakah Anda ingin membuat Profil Personal atau Profil Perusahaan." },
                 { step: "2", title: "Sesuaikan Desain", desc: "Pilih template dasar lalu klik langsung di layar (live edit) untuk mengubah isi konten, warna, dan desain sesuka Anda." },
                 { step: "3", title: "Publikasi ke Dunia", desc: "Copy link yang tersedia atau custom domain anda, lalu bagikan link ke semua orang!" },
               ].map((item, i) => (
@@ -333,20 +337,52 @@ export default function Home() {
             </div>
             
             <div className="grid sm:grid-cols-2 gap-6 md:gap-8 max-w-3xl mx-auto">
-              <Link 
-                href="/register" 
-                className="group flex flex-row sm:flex-col items-center justify-start sm:justify-center p-6 sm:py-12 sm:px-8 rounded-3xl border border-green-600 bg-white text-green-600 hover:bg-green-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
+              <div 
+                onClick={() => setShowPortoOptions(!showPortoOptions)}
+                className={`group grid p-6 sm:py-12 sm:px-8 rounded-3xl border transition-all duration-300 shadow-sm cursor-pointer ${
+                  showPortoOptions 
+                    ? 'border-green-600 ring-4 ring-green-50 bg-white' 
+                    : 'border-green-600 bg-white text-green-600 hover:bg-green-600 hover:text-white hover:shadow-md'
+                }`}
               >
-                <div className="shrink-0 w-16 h-16 sm:w-24 sm:h-24 bg-green-100/80 group-hover:bg-white/20 text-green-600 group-hover:text-white rounded-full flex items-center justify-center mr-4 sm:mr-0 mb-0 sm:mb-6 group-hover:scale-110 transition-all duration-300">
-                  <Globe className="w-8 h-8 sm:w-12 sm:h-12" strokeWidth={1.5} />
+                {/* Unexpanded State */}
+                <div 
+                  className={`col-start-1 row-start-1 flex items-center justify-start sm:justify-center flex-row sm:flex-col transition-opacity duration-300 ease-in-out ${
+                    showPortoOptions ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                  }`}
+                >
+                  <div className="shrink-0 w-16 h-16 sm:w-24 sm:h-24 bg-green-100/80 group-hover:bg-white/20 text-green-600 group-hover:text-white rounded-full flex items-center justify-center mr-4 sm:mr-0 mb-0 sm:mb-6 group-hover:scale-110 transition-all duration-300">
+                    <Globe className="w-8 h-8 sm:w-12 sm:h-12" strokeWidth={1.5} />
+                  </div>
+                  <span className="font-bold text-xl sm:text-2xl text-left sm:text-center">
+                    Buat Portofolio
+                  </span>
                 </div>
-                <span className="font-bold text-xl sm:text-2xl text-left sm:text-center">
-                  Buat Portofolio
-                </span>
-              </Link>
+
+                <div 
+                  className={`col-start-1 row-start-1 w-full flex flex-row items-stretch justify-center gap-3 sm:gap-4 transition-opacity duration-300 ease-in-out ${
+                    showPortoOptions ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                >
+                  <a href={getSubdomainUrl('portofolio', '/personal')} className="flex-1 bg-slate-50 border border-slate-200 hover:border-green-500 hover:bg-green-50 rounded-2xl p-3 sm:p-5 flex flex-col items-center justify-center text-center group/item transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center mb-2 sm:mb-3 shadow-sm group-hover/item:scale-110 transition-transform shrink-0">
+                      <Users className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
+                    </div>
+                    <span className="font-bold text-sm sm:text-base text-slate-800 leading-tight">Untuk <br className="block sm:hidden" />Personal</span>
+                    <span className="text-[10px] sm:text-xs text-slate-500 mt-1">Portofolio <br className="block sm:hidden" />personal</span>
+                  </a>
+                  <a href={getSubdomainUrl('portofolio', '/company')} className="flex-1 bg-slate-50 border border-slate-200 hover:border-green-500 hover:bg-green-50 rounded-2xl p-3 sm:p-5 flex flex-col items-center justify-center text-center group/item transition-colors" onClick={(e) => e.stopPropagation()}>
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center mb-2 sm:mb-3 shadow-sm group-hover/item:scale-110 transition-transform shrink-0">
+                      <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
+                    </div>
+                    <span className="font-bold text-sm sm:text-base text-slate-800 leading-tight">Untuk <br className="block sm:hidden" />Perusahaan</span>
+                    <span className="text-[10px] sm:text-xs text-slate-500 mt-1">Company profile <br className="block sm:hidden" />B2B</span>
+                  </a>
+                </div>
+              </div>
               
-              <Link 
-                href="/register?type=cv" 
+              <a 
+                href={getSubdomainUrl('resume')} 
                 className="group flex flex-row sm:flex-col items-center justify-start sm:justify-center p-6 sm:py-12 sm:px-8 rounded-3xl border border-blue-600 bg-white text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md"
               >
                 <div className="shrink-0 w-16 h-16 sm:w-24 sm:h-24 bg-blue-100/80 group-hover:bg-white/20 text-blue-600 group-hover:text-white rounded-full flex items-center justify-center mr-4 sm:mr-0 mb-0 sm:mb-6 group-hover:scale-110 transition-all duration-300">
@@ -355,7 +391,7 @@ export default function Home() {
                 <span className="font-bold text-xl sm:text-2xl text-left sm:text-center">
                   Buat CV
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
         </section>

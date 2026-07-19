@@ -23,7 +23,7 @@ import {
 export default function Home() {
   const [wordIndex, setWordIndex] = useState(0);
   const targetAudienceRef = useRef<HTMLDivElement>(null);
-  const words = ["Identitas", "Perusahaan", "Karier"];
+  const words = ["Identitas", "Karier", "Branding"];
 
   const scrollTargetAudience = (direction: "left" | "right") => {
     if (targetAudienceRef.current) {
@@ -35,7 +35,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
 
@@ -65,14 +65,14 @@ export default function Home() {
                   <span className="inline-grid mt-2">
                     <AnimatePresence mode="popLayout">
                       <motion.span
-                        key={words[wordIndex]}
+                        key={words[wordIndex % words.length]}
                         initial={{ y: 40, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: -40, opacity: 0 }}
                         transition={{ duration: 0.5, ease: "easeInOut" }}
                         className="col-start-1 row-start-1 text-left text-green-600"
                       >
-                        {words[wordIndex]}
+                        {words[wordIndex % words.length]}
                       </motion.span>
                     </AnimatePresence>
                   </span>

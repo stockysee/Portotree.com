@@ -135,6 +135,11 @@ Resume siap dipublikasikan.
 
 Membangun portfolio online.
 
+## Routing & Sales Page Strategy
+- `/portofolio` : Halaman pengantar utama (Hub) untuk memilih tipe portofolio.
+- `/portofolio?type=individu` : Landing page / Sales page khusus untuk target Individu.
+- `/portofolio?type=company` : Landing page / Sales page khusus untuk target Perusahaan (B2B).
+
 ### Features
 
 - Portfolio CRUD
@@ -219,14 +224,17 @@ User dapat melihat performa profilnya.
 
 ---
 
-# Phase 9 — Premium
+# Phase 9 — Monetization (Premium & Ads)
 
-## Features
+## Ads Strategy (Free Tier)
+- **Job Feed**: In-feed ads (native) di sela-sela daftar lowongan.
+- **Public Profile (Free)**: Banner iklan atau watermark "Powered by PortoTree" di halaman portofolio pengguna gratis.
+- **Dashboard**: Banner ads di area edit portofolio (sidebar / bottom).
 
-- Payment
-- Subscription
+## Premium Features
+- Payment Gateway & Subscription
+- Ad-Free Public Profile (Hapus Iklan & Watermark)
 - Premium Templates
-- No Watermark
 - DOCX Export
 - Custom Domain (Future Ready)
 
