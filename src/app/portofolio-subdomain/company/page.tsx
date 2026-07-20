@@ -40,9 +40,22 @@ export default function CompanyLandingPage() {
       <main className="flex-1">
         {/* HERO SECTION */}
         <section className="relative w-full min-h-[90vh] md:min-h-screen flex flex-col justify-center pt-32 pb-16 lg:pt-40 lg:pb-20 text-left overflow-hidden bg-slate-50">
-          <div className="absolute inset-0 magicpattern z-[-1] opacity-50"></div>
           
-          <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
+          {/* Enhanced Background for B2B */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            {/* Grid Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(37,99,235,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(37,99,235,0.05)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+            
+            {/* Glowing Gradient Orbs */}
+            <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-blue-400/20 rounded-full blur-[120px] mix-blend-multiply"></div>
+            <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-indigo-400/20 rounded-full blur-[120px] mix-blend-multiply"></div>
+            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-sky-300/20 rounded-full blur-[150px] mix-blend-multiply"></div>
+            
+            {/* Subtle Magic Pattern Overlay if needed */}
+            <div className="absolute inset-0 magicpattern opacity-30 mix-blend-overlay"></div>
+          </div>
+          
+          <div className="w-full max-w-7xl mx-auto px-6 md:px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -278,7 +291,7 @@ export default function CompanyLandingPage() {
               },
               { 
                 id: "startup",
-                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?q=80&w=1932&auto=format&fit=crop", 
+                image: "/b2b.png", 
                 title: "Startup B2B",
                 subtitle: "Jelaskan produk SaaS Anda dengan halaman yang rapi dan terstruktur."
               }
@@ -289,7 +302,7 @@ export default function CompanyLandingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: i * 0.15, duration: 0.6 }}
-                  className="rounded-t-2xl md:rounded-t-[2rem] rounded-b-full overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-3 bg-white flex flex-col border border-slate-100 h-full"
+                  className="rounded-b-2xl md:rounded-b-[2rem] rounded-t-full overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:-translate-y-3 bg-white flex flex-col border border-slate-100 h-full"
                 >
                   <div className="w-full aspect-square relative">
                     <img 

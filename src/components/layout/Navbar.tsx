@@ -100,83 +100,92 @@ export function Navbar() {
             {pathname.includes('/company') ? (
               <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href={getMainUrl('/job-feed')} className="transition-colors hover:text-blue-600 text-slate-600 font-semibold py-2 flex items-center gap-1">
-                  Talent Feed <span className="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full uppercase tracking-widest">New</span>
+                  Talent Feed <span className="text-[9px] font-bold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full uppercase tracking-widest">Soon</span>
                 </a>
                 <a href="#layanan" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Layanan</a>
                 <a href="#klien" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Klien</a>
                 <a href="#kontak" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Kontak</a>
               </nav>
+            ) : pathname.includes('/personal') ? (
+              <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href={getMainUrl('/job-feed')} className="transition-colors hover:text-blue-600 text-slate-600 font-semibold py-2 flex items-center gap-1">
+                  Job Feed <span className="text-[9px] font-bold bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full uppercase tracking-widest">Soon</span>
+                </a>
+                <a href={getSubdomainUrl('resume')} className="transition-colors hover:text-foreground/80 text-foreground/60 py-2 font-semibold">Buat CV</a>
+                <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Blog</Link>
+                <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Tentang kami</Link>
+              </nav>
             ) : (
               <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
                 <div className="relative group">
-                <button className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 focus:outline-none py-2">
-                  Produk <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-180" />
-                </button>
-                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
-                  <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
-                    <a href={getMainUrl('/job-feed')} className="flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
-                      <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0 transition-transform group-hover/item:scale-110">
-                        <Briefcase className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-sm text-slate-800 flex items-center gap-2">
-                          Job Feed
-                          <span className="text-[9px] font-bold uppercase tracking-widest bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Soon</span>
+                  <button className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 focus:outline-none py-2">
+                    Produk <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-180" />
+                  </button>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                    <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
+                      <a href={getMainUrl('/job-feed')} className="flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
+                        <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0 transition-transform group-hover/item:scale-110">
+                          <Briefcase className="w-5 h-5" />
                         </div>
-                        <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
-                      </div>
-                    </a>
-                    <div className="relative group/sub">
-                      <a href={getSubdomainUrl('portofolio')} className="flex items-center justify-between p-3 rounded-lg hover:bg-emerald-50 transition-colors mt-1 cursor-pointer group/item">
-                        <div className="flex items-start gap-4">
-                          <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0 transition-transform group-hover/item:scale-110">
-                            <Layout className="w-5 h-5" />
+                        <div>
+                          <div className="font-bold text-sm text-slate-800 flex items-center gap-2">
+                            Job Feed
+                            <span className="text-[9px] font-bold uppercase tracking-widest bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">Soon</span>
                           </div>
-                          <div>
-                            <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
-                            <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
-                          </div>
+                          <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 group-hover/item:translate-x-1 transition-transform" />
                       </a>
-                      
-                      {/* Sub-menu on Hover */}
-                      <div className="absolute top-0 left-full ml-1 w-64 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 -translate-x-2 group-hover/sub:translate-x-0 z-50">
-                        <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
-                          <a href={getSubdomainUrl('portofolio', '/personal')} className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors group/item">
-                            <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
-                              <Users className="w-4 h-4" />
+                      <div className="relative group/sub">
+                        <a href={getSubdomainUrl('portofolio')} className="flex items-center justify-between p-3 rounded-lg hover:bg-emerald-50 transition-colors mt-1 cursor-pointer group/item">
+                          <div className="flex items-start gap-4">
+                            <div className="bg-emerald-100/50 p-2.5 rounded-lg text-emerald-600 shrink-0 transition-transform group-hover/item:scale-110">
+                              <Layout className="w-5 h-5" />
                             </div>
                             <div>
-                              <div className="font-bold text-sm text-slate-800">Untuk Personal</div>
-                              <div className="text-xs text-slate-500 mt-0.5">Portofolio personal</div>
+                              <div className="font-bold text-sm text-slate-800">Buat Portofolio</div>
+                              <div className="text-xs text-slate-500 mt-0.5">Pamerkan karya Anda</div>
                             </div>
-                          </a>
-                          <a href={getSubdomainUrl('portofolio', '/company')} className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors mt-1 group/item">
-                            <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
-                              <Building2 className="w-4 h-4" />
-                            </div>
-                            <div>
-                              <div className="font-bold text-sm text-slate-800">Untuk Perusahaan</div>
-                              <div className="text-xs text-slate-500 mt-0.5">Company profile B2B</div>
-                            </div>
-                          </a>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 group-hover/item:translate-x-1 transition-transform" />
+                        </a>
+                        
+                        {/* Sub-menu on Hover */}
+                        <div className="absolute top-0 left-full ml-1 w-64 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 -translate-x-2 group-hover/sub:translate-x-0 z-50">
+                          <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
+                            <a href={getSubdomainUrl('portofolio', '/personal')} className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors group/item">
+                              <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
+                                <Users className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-sm text-slate-800">Untuk Personal</div>
+                                <div className="text-xs text-slate-500 mt-0.5">Portofolio personal</div>
+                              </div>
+                            </a>
+                            <a href={getSubdomainUrl('portofolio', '/company')} className="flex items-start gap-3 p-3 rounded-lg hover:bg-green-50 transition-colors mt-1 group/item">
+                              <div className="bg-green-100/50 p-2.5 rounded-lg text-green-600 shrink-0 transition-transform group-hover/item:scale-110">
+                                <Building2 className="w-4 h-4" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-sm text-slate-800">Untuk Perusahaan</div>
+                                <div className="text-xs text-slate-500 mt-0.5">Company profile B2B</div>
+                              </div>
+                            </a>
+                          </div>
                         </div>
                       </div>
+                      <a href={getSubdomainUrl('resume')} className="flex items-start gap-4 p-3 rounded-lg hover:bg-amber-50 transition-colors mt-1 group/item">
+                        <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0 transition-transform group-hover/item:scale-110">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-sm text-slate-800">Buat CV</div>
+                          <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
+                        </div>
+                      </a>
                     </div>
-                    <a href={getSubdomainUrl('resume')} className="flex items-start gap-4 p-3 rounded-lg hover:bg-amber-50 transition-colors mt-1 group/item">
-                      <div className="bg-amber-100/50 p-2.5 rounded-lg text-amber-600 shrink-0 transition-transform group-hover/item:scale-110">
-                        <FileText className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-sm text-slate-800">Buat CV</div>
-                        <div className="text-xs text-slate-500 mt-0.5">Bikin CV standar ATS</div>
-                      </div>
-                    </a>
                   </div>
                 </div>
-              </div>
-              <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Blog</Link>
+                <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Blog</Link>
                 <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Tentang kami</Link>
               </nav>
             )}
