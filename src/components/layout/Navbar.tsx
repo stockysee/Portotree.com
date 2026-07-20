@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getSubdomainUrl } from '@/lib/url';
+import { getSubdomainUrl, getMainUrl } from '@/lib/url';
 
 export function Navbar() {
   // Mock status login untuk simulasi UI
@@ -23,8 +23,16 @@ export function Navbar() {
   const [isFabOpen, setIsFabOpen] = useState(false);
   const [showFab, setShowFab] = useState(false);
   const [showMobilePortoSub, setShowMobilePortoSub] = useState(false);
+  const [isPortofolioDomain, setIsPortofolioDomain] = useState(false);
   const router = useRouter();
   const pathname = usePathname() || '';
+  const isSubdomain = pathname.startsWith('/portofolio-subdomain') || pathname.startsWith('/resume-subdomain');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsPortofolioDomain(window.location.hostname.includes('portofolio'));
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,18 +86,35 @@ export function Navbar() {
                 <span className="text-lg font-bold bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent -ml-1">Personal</span>
               )}
               {pathname.includes('/company') && (
-                <span className="text-lg font-bold bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent -ml-1">Company</span>
+                <span className="text-lg font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent -ml-1">Company</span>
+              )}
+              {isPortofolioDomain && pathname === '/' && (
+                <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent -ml-1">Portofolio</span>
+              )}
+              {/* Fallback for local development direct path access */}
+              {pathname === '/portofolio-subdomain' && !isPortofolioDomain && (
+                <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent -ml-1">Portofolio</span>
               )}
             </div>
 
-            <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-              <div className="relative group">
+            {pathname.includes('/company') ? (
+              <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href={getMainUrl('/job-feed')} className="transition-colors hover:text-blue-600 text-slate-600 font-semibold py-2 flex items-center gap-1">
+                  Talent Feed <span className="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-full uppercase tracking-widest">New</span>
+                </a>
+                <a href="#layanan" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Layanan</a>
+                <a href="#klien" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Klien</a>
+                <a href="#kontak" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Kontak</a>
+              </nav>
+            ) : (
+              <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+                <div className="relative group">
                 <button className="transition-colors hover:text-foreground/80 text-foreground/60 flex items-center gap-1 focus:outline-none py-2">
                   Produk <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:-rotate-180" />
                 </button>
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
                   <div className="bg-white rounded-xl p-2 shadow-xl border border-slate-100 flex flex-col">
-                    <Link href="/job-feed" className="flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
+                    <a href={getMainUrl('/job-feed')} className="flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
                       <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0 transition-transform group-hover/item:scale-110">
                         <Briefcase className="w-5 h-5" />
                       </div>
@@ -100,7 +125,7 @@ export function Navbar() {
                         </div>
                         <div className="text-xs text-slate-500 mt-0.5">Cari lowongan kerja terbaru</div>
                       </div>
-                    </Link>
+                    </a>
                     <div className="relative group/sub">
                       <a href={getSubdomainUrl('portofolio')} className="flex items-center justify-between p-3 rounded-lg hover:bg-emerald-50 transition-colors mt-1 cursor-pointer group/item">
                         <div className="flex items-start gap-4">
@@ -152,8 +177,9 @@ export function Navbar() {
                 </div>
               </div>
               <Link href="https://www.portotree.com/blog" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Blog</Link>
-              <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Tentang kami</Link>
-            </nav>
+                <Link href="https://www.portotree.com/about" target="_blank" className="transition-colors hover:text-foreground/80 text-foreground/60 py-2">Tentang kami</Link>
+              </nav>
+            )}
             
             <div className="flex items-center gap-4">
               {/* Tombol Utama (Disembunyikan di Mobile) */}
@@ -215,7 +241,7 @@ export function Navbar() {
 
       {/* Floating Navigation FAB for Mobile */}
       <AnimatePresence>
-        {showFab && (
+        {showFab && !isSubdomain && (
           <motion.div 
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -286,7 +312,7 @@ export function Navbar() {
                     >
                       <div className="relative grid">
                         <div className={`col-start-1 row-start-1 flex flex-col transition-opacity duration-300 ${showMobilePortoSub ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                          <button onClick={() => { router.push('/job-feed'); setIsFabOpen(false); setShowMobilePortoSub(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
+                          <button onClick={() => { window.location.href = getMainUrl('/job-feed'); setIsFabOpen(false); setShowMobilePortoSub(false); }} className="w-full text-left flex items-start gap-4 p-3 rounded-lg hover:bg-blue-50 transition-colors group/item">
                             <div className="bg-blue-100/50 p-2.5 rounded-lg text-blue-600 shrink-0 transition-transform group-hover/item:scale-110">
                               <Briefcase className="w-5 h-5" />
                             </div>

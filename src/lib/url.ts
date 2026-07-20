@@ -9,3 +9,11 @@ export function getSubdomainUrl(subdomain: string, path: string = '') {
   // In production, we use the actual domain.
   return `https://${subdomain}.portotree.com${path}`;
 }
+
+export function getMainUrl(path: string = '') {
+  const isDev = process.env.NODE_ENV === 'development';
+  if (isDev) {
+    return `http://localhost:3000${path}`;
+  }
+  return `https://portotree.com${path}`;
+}
